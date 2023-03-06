@@ -70,7 +70,7 @@ def createTable(dataframe,symbol):
     dataframe.to_sql(con=engine, name=symbol,if_exists="replace",index=False)
   
     
-    #Set 'Date' as primary key (ideally you wound want to set a composite key(id,Date), yet 
+    #Set 'Date' as primary key (ideally you would want to set a composite key(id,Date), yet 
     # just leave it as it is for the time being)
     alter_table = f"""alter table {symbol} add primary key (Date);"""
 
