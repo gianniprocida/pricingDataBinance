@@ -5,6 +5,7 @@ import re
 
 url = "https://www.cryptodatadownload.com/data/binance/"
 
+# (Need to update it, no longer working)
 # Load the web page content
 
 r = requests.get(url, headers = {

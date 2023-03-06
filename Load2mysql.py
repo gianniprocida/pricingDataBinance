@@ -27,6 +27,13 @@ def ReformatData(filename):
     reformatted.rename(columns={reformatted.columns[8]: "Volume_USDT"},inplace=True)
     symbol = filename.split('_')[0]
     reformatted['symbol'] = reformatted['symbol'].str.replace('/','')
+    reformatted.drop(['unix'], axis = 1, inplace = True) 
+    ii = []
+    for i in range(reformatted.shape[0]):
+       ii.append(i)
+    reformatted['id'] = ii
+    reformatted = reformatted.reset_index()
+    reformatted.index = reformatted.index.rename('id')
     return reformatted,symbol
 
 
@@ -44,76 +51,34 @@ def deleteRowsAt(dataframes,minNumofRows):
     return dataframes
 
 
-def createParentTable(cnx, cur, dataframe):
+def createTable(dataframe,symbol):
  
-    tableName="BinanceData"
-     
-
     cur.execute(usedb)
     
     engine = create_engine("""mysql+mysqlconnector://{user}:{password}@{host}/{db}""".
     format(user="root",host="localhost",password="Chimica90$",db="Cryptocurrencies"))
-
-    createTable = f"""create table if not exists {tableName} (unix int not null, Date date, open decimal(12,4), 
+    
+    createTable = f"""create table if not exists {symbol} (Date date, open decimal(12,4), 
         high decimal(12,4), low decimal(12,4), close decimal(12,4), Volume_crypto decimal(12,4), Volume_USDT decimal(12,4), 
-        tradecount int not null)"""
-        
-   
+        tradecount int not null, id int not null);"""
+    
     cur.execute(createTable)
 
-    dataframe.to_sql(con=engine, name=tableName,if_exists="replace",index=True) 
+
+    cur.execute(f"""show columns from {symbol}""")
+
+    dataframe.to_sql(con=engine, name=symbol,if_exists="replace",index=False)
+  
+    
+    #Set 'Date' as primary key (ideally you wound want to set a composite key(id,Date), yet 
+    # just leave it as it is for the time being)
+    alter_table = f"""alter table {symbol} add primary key (Date);"""
+
+    cur.execute(alter_table)
+
        
     cnx.commit()
     return cnx
-
-
-
-def appendToParentTable(cnx,cur,dataframe):
-
-    tableName = "BinanceData"
-    engine = create_engine("""mysql+mysqlconnector://{user}:{password}@{host}/{db}""".
-    format(user="root",host="localhost",password="Chimica90$",db="Cryptocurrencies"))
-
-    dataframe.to_sql(con=engine, name=tableName,if_exists="append",index=True) 
-
-    cnx.commit()
-
-
-def createChildTable(cnx,cur):
-    createTablewithClosingPrice="""create table if not exists ClosingPrice as select Date from BinanceData 
-    where BinanceData.index between 0 and 900;"""
-    
-    cur.execute(createTablewithClosingPrice)
-
-    cnx.commit()
-
-
-def populateChildTable(cnx,cur,symbols):
-
-   
-    while len(symbols) > 0:
-
-       symb = symbols.pop()
-    
-       alterTablewithClosingPrice = f"""alter table ClosingPrice add column {symb} decimal(12,4) after Date"""
-
-       
-       cur.execute(alterTablewithClosingPrice)
-
-       print("Inserting {} closing price into ClosingPrice table...".format(symb))
-       print(" ")
-
-       updateTablewithClosingPrice = f"""update ClosingPrice inner join BinanceData 
-       on ClosingPrice.Date = BinanceData.Date and BinanceData.symbol='{symb}'
-       set ClosingPrice.{symb} = BinanceData.close""" 
-
-
-       print(updateTablewithClosingPrice)
-       cur.execute(updateTablewithClosingPrice)
-       cnx.commit()
-       time.sleep(5)
-
-
 
 
 
@@ -121,7 +86,8 @@ def populateChildTable(cnx,cur,symbols):
 
 if __name__=='__main__':
 
-
+    # Run the script only if the database doesn't exist
+    # (Need to fix this, )
     (cnx, cur) = getConn()
 
     createdb = """create database if not exists Cryptocurrencies"""
@@ -138,7 +104,7 @@ if __name__=='__main__':
     output = list(map(ReformatData, csv_files))
     
     dataframes = [item[0] for item in output]  
-
+   # my = dataframes[0]
     symbols = [item[1] for item in output]
 
   
@@ -147,16 +113,11 @@ if __name__=='__main__':
 
     dataframes = deleteRowsAt(dataframes,minNumOfRows)
 
-    # Create ParentTable (single table containing data from one dataframe)
-    onedataframe = dataframes.pop()
-
-    cnx = createParentTable(cnx,cur,onedataframe)
-     
-    # Add the rest of dataframes 
-    while len(dataframes) > 0:
-        appendToParentTable(cnx,cur,dataframes.pop())
-
-    # Create childTable ( table with closing price per each dataframe)
-    createChildTable(cnx,cur)
-    populateChildTable(cnx,cur,symbols)
+    
+    # Create as many as the number of csv files 
+    while len(dataframes) > 0 and len(symbols) > 0:
+      createTable(dataframes.pop(),symbols.pop())
+    
+    # To run the sql script from python (TO DO)
+    #https://stackoverflow.com/questions/59848116/how-to-execute-a-sql-file-using-mysql-connector-and-save-it-in-a-database-in-py
 
