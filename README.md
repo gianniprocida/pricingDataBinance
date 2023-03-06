@@ -6,7 +6,7 @@
 <body>
     <h1>Cryptocurrency analysis</h1>
     <hr>
-     <p> Collection of pricing data to a database. Pricing data extracted from : <a href="https://www.cryptodatadownload.com/data/binance/">Click here</a></p>
+     <p> Relational database with pricing data extracted from : <a href="https://www.cryptodatadownload.com/data/binance/">Click here</a></p>
     <h2>Python files</h2>
   <ul>
       <li> scraper.py</li>
