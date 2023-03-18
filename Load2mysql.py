@@ -29,7 +29,7 @@ def ReformatData(filename):
     reformatted['symbol'] = reformatted['symbol'].str.replace('/','')
     reformatted.drop(['unix'], axis = 1, inplace = True) 
     ii = []
-    for i in range(reformatted.shape[0]):
+    for i in range(reformatted.shape[0],0,-1):
        ii.append(i)
     reformatted['id'] = ii
     reformatted = reformatted.reset_index()
@@ -45,10 +45,11 @@ def getMinNumOfRows(dataframes):
     return minNumofRows
 
 
-def deleteRowsAt(dataframes,minNumofRows):
-    for i in dataframes:
-        i.drop(i.index[minNumOfRows + 1:],axis = 0, inplace=True)
-    return dataframes
+# csv files have different number of rows so using this function there will be no risk of
+# having dataframes with different n of rows
+def selectNRowsfromdf(dataframe):
+    n = 1030
+    return dataframe.iloc[0:n]
 
 
 def createTable(dataframe,symbol):
@@ -108,10 +109,8 @@ if __name__=='__main__':
     symbols = [item[1] for item in output]
 
   
-    # I want my dataframes to have the same number of rows
-    minNumOfRows = getMinNumOfRows(dataframes)
 
-    dataframes = deleteRowsAt(dataframes,minNumOfRows)
+    dataframes = list(map(selectNRowsfromdf,dataframes))
 
     
     # Create as many as the number of csv files 
