@@ -19,9 +19,10 @@
      <h2>Description</h2>
     <ul>
         <li>analysis.py -> data visualization </li>
-        <li>simpleDataPipeline.py -> populate a mysql database with pricing data for each csv file</li>
+        <li>Load2mysql.py -> populate a mysql database with pricing data from each csv file</li>
         <li>scraper.py -> downloads pricing data from <a href="https://www.cryptodatadownload.com/data/binance/">Click here</a> </li>
         <li>createClosingPrice.sql -> define relationships among tables.Insert data into the closingPrice (referencing table) from other tables i.e. BTCUSDT,ETHUSDT,EOSUSDT,LTCUSDT (referenced tables)</li>
+        <li>createOpeningPrice.sql -> define relationships among tables. Insert data into the OpeningPrice (referencing table) from other tables i.e. BTCUSDT,ETHUSDT,EOSUSDT,LTCUSDT (referenced tables)</li>
     </ul>
 
 </body>
