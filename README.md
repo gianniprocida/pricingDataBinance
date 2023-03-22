@@ -8,7 +8,7 @@
     <hr>
      <p> Designing databases for storing, processing, and analyzing pricing data. Data are taken from here:<a href="https://www.cryptodatadownload.com/data/binance/">Click here</a></p>
     <h2>Final approach</h2>
-    csv files (pricing data ) are downloaded through web scraping, after which they are cleaned using 
+    csv files (pricing data ) are downloaded through web scraping, after which they are cleaned
     using pandas. Data are going to be distributed across several databases.
          For example, we create a database with only BTC pricing data, EOS pricing data, ETH pricing data, and LTC pricing data.
   <ul>  
