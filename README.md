@@ -29,3 +29,4 @@
 This UML diagram provides a visual representation of the one-to-one relationships between the closingprice table the BTC, ETH, LTC and EOS tables.
 A 1:1 relationship means that each row in one table is associated with one and only one row in another table. 
 In other words, there is a one-to-one correspondence between rows in the two tables. <img src="diagram.png" alt="Description of the image">
+In the closing price diagram, the attributes BTC, ETH, EOS, and LTC represent the closing prices of the BTC, ETH, EOS, and LTC tables respectively.
