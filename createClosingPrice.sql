@@ -27,7 +27,7 @@ UPDATE ETH SET myidx = (@eth := @eth + 1) LIMIT 1020;
 /*-- Adding foreign key constraint to link BTC table with closingprice table. Not sure whether that's the proper way to do it
 but for the sake of the simplicity, I'll keep it like that.
 */
-create table if not exists closingprice (id int not null,Date datetime not null,primary key(Date)); 
+create table if not exists closingprice (id int not null,Date datetime not null,primary key(id)); 
 
 alter table closingprice
 add constraint fk_btc_cl
