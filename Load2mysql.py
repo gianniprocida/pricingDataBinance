@@ -3,6 +3,8 @@ import os
 import mysql.connector
 from sqlalchemy import create_engine
 import time
+import pymysql
+
 
 def getConn():
     cnx = mysql.connector.connect(
@@ -49,13 +51,6 @@ def data_cleaning(filename):
     clean_df.rename(columns={clean_df.columns[8]: "Volume_USDT"},inplace=True)
     clean_df['symbol'] = clean_df['symbol'].str.replace('/','')
     clean_df.drop(['unix'], axis = 1, inplace = True) 
-    ii = []
-    # Adding an artificial index
-    for i in range(clean_df.shape[0]):
-       ii.append(i)
-    clean_df['id'] = ii
-    clean_df = clean_df.reset_index()
-    clean_df.index = clean_df.index.rename('id')
     print("Finished")
     print(" ")
     return clean_df
@@ -113,9 +108,11 @@ def createTable(cnx,dataframe,symbol,mydb):
 
 
     dataframe.to_sql(con=engine, name=symbol,if_exists="replace",index=False)
-  
+   
+    print(f"{symbol} table successfully created ...")
+    print(" ")
     
-    #Set 'Date' as the primary key (ideally you would want to set a composite key(id,Date), yet 
+    # Set 'Date' as the primary key (ideally you would want to set a composite key(id,Date), yet 
     # just leave it as it is for the time being)
     alter_table = f"""alter table {symbol} add primary key (Date);"""
 
@@ -134,33 +131,39 @@ if __name__=='__main__':
    
     cnx = getConn()
 
-    mydb = input("Enter the database you wish to create")
+    mydb = "pricingdata"
 
     cur = cnx.cursor()
     createdb = f"""create database if not exists {mydb}"""
     cur.execute(createdb)
 
-    # cur.execute(createdb)
-
-    # usedb = """use Cryptocurrencies"""
-
-    # i.e. BTCUSDT, EOSUSDT, ETHUSD, LTCUSDT
-
     dataframes = []
     symbols = []
     for i in range(4):
         pattern = "USDT_Binance_futures_data_day.csv"
-        symbol = input("Enter the symbol")
+        symbol = input("Please enter one of the following cryptocurrencies at a time: BTC, EOS, ETH, or LTC.")
         print(f"{symbol} was entered")
         symbols.append(symbol)
         myfile = symbol + pattern
         dataframes.append(data_cleaning(myfile))
-
+    
+    # We are using slicing to accommodate datasets that have fewer rows than others.
     dataframes = list(map(select_nrows,dataframes))
 
     while len(dataframes) > 0 and len(symbols) > 0:
         createTable(cnx,dataframes.pop(),symbols.pop(),mydb)
 
+    # # create a connection object to your MySQL database
+    # conn = pymysql.connect(host='localhost', user='root', password='Chimica90$', db=mydb)
+
+    # with open('createmyidx.sql', 'r') as file:
+    #   sql_script = file.read()
+
+    # cur = conn.cursor()
+
+    # cur.execute(sql_script)
+
+    # conn.commit()
 
 
 

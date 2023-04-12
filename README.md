@@ -4,31 +4,60 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>Problem Statement</h1>
+    <h1>Overview</h1>
     <hr>
-     <p> Designing databases for storing, processing, and analyzing pricing data. Data are taken from here:<a href="https://www.cryptodatadownload.com/data/binance/">Click here</a></p>
-    <h2>Final approach</h2>
-    csv files (pricing data ) are downloaded through web scraping, after which they are cleaned
+     <p> This is a series of Python and SQL scripts that allows you to design databases for storing, processing, and analyzing pricing data. Data are taken from here:<a href="https://www.cryptodatadownload.com/data/binance/">Click here</a></p>
+    <h2>Getting started</h2>
+    Before using the scripts App make sure you have Python3 installed on your computer.
+    csv files (pricing data ) are downloaded through web scraping, after which they are cleaned using 
     using pandas. Data are going to be distributed across several databases.
          For example, we create a database with only BTC pricing data, EOS pricing data, ETH pricing data, and LTC pricing data.
-  <ul>  
-      Input required:  </li>
-      <li>BTCUSDT_Binance_futures_data_day.csv</li>
-      <li>EOSUSDT_Binance_futures_data_day</li>
-      <li>ETHUSDT_Binance_futures_data_day</li>
-      <li>LTCUSDT_Binance_futures_data_day</li>
-      <li>TO DO: Add Entity relationship model </li>
 
-  </ul>
-     <h2>Pseudo Code</h2>
+     <h3>How to run it?</h3>
    <ul>
-     <li>Step 1: Download csv files through web scraping</li>
-     <li>Step 2: Clean and store data in a mysql database</li>
-     <li>Step 3: Create new two tables: closingPrice and OpeningPrice. 
-        Define relationships between tables</li>
-     <li>Step 4: Analyze closingPrice table</li>
+     <li>Clone the repository from GitHub: git clone https://github.com/gianniprocida/ </li>
+     <li>Navigate to the habit-tracker directory: cd habit-tracker</li>
+     <li>Run the python script to create the database with pricing data of BTC,ETH, EOS, LTC
+        : python3.8 Load2mysql 
+        </li>
+     <li>Run the script 'createClosingPrice.sql' to create a new table named "closingprice" in the database, and establish relationships between the "closingprice" table
+         and any existing tables in the database as necessary.</li>
    </ul>     
-     <h2>Codes</h2>
+<h2>Features</h2>
+<h3>Creating habits</h3>
+
+```
+tracker = HabitTracker("John")
+tracker.addHabit("Brush your teeth","2023-03-01","2023-03-4","D")
+tracker.addHabit("Go to school","2023-03-02","2023-04-30","D")
+```
+
+<h3>Deleting habits</h3>
+To delete a habit, use the delete method:
+
+```
+tracker.deleteHabit("Go to school")
+```
+
+<h3>Searching by name</h3>
+To search for a habit, use the search_by_name method:
+
+```
+(myhabit,index) = tracker.search_by_name("Brush your teeth")
+```
+
+<h3>Searching by id</h3>
+
+```
+output = tracker.search_by_id(1)
+```
+
+<h3>Checking off by name</h3>
+
+```
+tracker.checkoff_by_name("Brush your teeth","y")
+tracker.checkoff_by_name("Brush your teeth","y")
+```
     <ul>
         <li>analysis.py -> data visualization </li>
         <li>Load2mysql.py -> populate a mysql database with pricing data from each csv file</li>
