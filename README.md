@@ -26,10 +26,6 @@
 </body>
 
 <h2>Thought Process and Development of the database</h2>
-Formally, a habit is can be defined as task that must be completed periodically 
-(e.g., brush your teeth every day or go to the dentist once every year). 
-The obvious object, therefore, is the <span style="color: red;">Habit</span>
-object; less obvious one is 
 This UML diagram provides a visual representation of the one-to-one relationships between the closingprice table the BTC, ETH, LTC and EOS tables.
 A 1:1 relationship means that each row in one table is associated with one and only one row in another table. 
 In other words, there is a one-to-one correspondence between rows in the two tables. <img src="diagram.png" alt="Description of the image">
