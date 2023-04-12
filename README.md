@@ -17,10 +17,8 @@
    <ul>
      <li>Clone the repository from GitHub: git clone https://github.com/gianniprocida/</li>
      <li>Navigate to the habit-tracker directory: cd habit-tracker</li>
-     <li>Run the python script to create the database with pricing data of BTC,ETH, EOS, LTC:
-```
-python3.8 Load2mysql.py
-``` </li>
+     <li>Run the python script to create the database with pricing data of BTC,ETH, EOS, LTC:python3.8 Load2mysql.py
+ </li>
      <li>Run the script 'createClosingPrice.sql' to create a new table named "closingprice" in the database, and establish relationships between the "closingprice" table
          and all existing tables in the database as necessary.</li>
    </ul>     
