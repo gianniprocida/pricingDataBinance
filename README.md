@@ -29,4 +29,9 @@
 This UML diagram provides a visual representation of the one-to-one relationships between the closingprice table the BTC, ETH, LTC and EOS tables.
 A 1:1 relationship means that each row in one table is associated with one and only one row in another table. 
 In other words, there is a one-to-one correspondence between rows in the two tables. <img src="diagram.png" alt="Description of the image">
-In the closing price diagram, the attributes BTC, ETH, EOS, and LTC represent the closing prices of the BTC, ETH, EOS, and LTC tables respectively.
+In the closing price diagram, the attributes BTC, ETH, EOS, and LTC represent the closing prices of the BTC, ETH, EOS, and LTC tables respectively.kkkk
+
+<h2>Analysis using pandas</h2>
+A correlation coefficient of around 0.90 between the BTC and ETH columns, after calculating the daily percentage change for the dataset, indicates a strong positive correlation between these two variables. This suggests that there is a high probability that the returns on these two cryptocurrencies will move in the same direction. <img src="correlation.png" alt="Description of the image">
+
+The box plot analysis reveals that the BTC column is less volatile than the other columns in the dataset, as evidenced by the narrow interquartile range (IQR). On the other hand, the EOS column exhibits a large number of outliers, which are data points that lie outside the whiskers of the box plot. This suggests that the EOS column has a higher degree of variability and potentially greater risk associated with it. <img src="box_plot.png" alt="Description of the image">
