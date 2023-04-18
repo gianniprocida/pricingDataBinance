@@ -6,12 +6,12 @@
 <body>
     <h1>Overview</h1>
     <hr>
-     <p> This is a series of Python and SQL scripts that allows you to design databases for storing, processing, and analyzing pricing data. Data is sourced from this link:<a href="https://www.cryptodatadownload.com/data/binance/">Click here</a></p>
+     <p> This is a series of Python and SQL scripts that allows you to design databases for storing, processing, and analyzing pricing data. </p>
     <h2>Getting started</h2>
 
    <h3>How to run it?</h3>
    <ul>
-     <li>Clone the repository from GitHub: git clone https://github.com/gianniprocida/pricingDataBinance/tree/new_branch</li>
+     <li>Clone the repository from GitHub: git clone https://github.com/gianniprocida/pricingDataBinance</li>
      <li>Navigate to the pricingDataBinance: cd pricingDataBinance</li>
      <li>Install any dependencies required by the project:
       <ul>
