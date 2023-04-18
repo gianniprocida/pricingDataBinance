@@ -3,7 +3,6 @@ import os
 import mysql.connector
 from sqlalchemy import create_engine
 import time
-import pymysql
 
 
 def getConn():
@@ -124,8 +123,6 @@ def createTable(cnx,dataframe,symbol,mydb):
 
 
 
-
-
 if __name__=='__main__':
 
    
@@ -153,41 +150,5 @@ if __name__=='__main__':
     while len(dataframes) > 0 and len(symbols) > 0:
         createTable(cnx,dataframes.pop(),symbols.pop(),mydb)
 
-    # # create a connection object to your MySQL database
-    # conn = pymysql.connect(host='localhost', user='root', password='Chimica90$', db=mydb)
-
-    # with open('createmyidx.sql', 'r') as file:
-    #   sql_script = file.read()
-
-    # cur = conn.cursor()
-
-    # cur.execute(sql_script)
-
-    # conn.commit()
-
-
-
-
-
     
-    #csv_files = [file for file in os.listdir(os.getcwd()) if
-    #             file.endswith('.csv')]
-    
-    # Reformat datasets and get symbols for each dataset
-   # output = list(map(data_cleaning, csv_files))
-    
-    #dataframes = [item[0] for item in output]  
-   # my = dataframes[0]
-   # symbols = [item[1] for item in output]
-
-  
-
-    # dataframes = list(map(selectNRowsfromdf,dataframes))
-
-    
-    # # Create as many as the number of csv files 
-    
-    
-    # To run the sql script from python (TO DO)
-    #https://stackoverflow.com/questions/59848116/how-to-execute-a-sql-file-using-mysql-connector-and-save-it-in-a-database-in-py
 

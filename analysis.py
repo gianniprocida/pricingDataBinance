@@ -4,30 +4,36 @@ from Load2mysql import getConn
 import matplotlib.pyplot as plt
 
 
-cnx = getConn()
 
-cur = cnx.cursor()
+def analyzeclosingprice():
+    cnx = getConn()
 
-cur.execute("use pricingdata")
+    cur = cnx.cursor()
 
-df = pd.read_sql("select * from closingprice",cnx)
+    cur.execute("use pricingdata")
 
-df.set_index('Date',inplace=True)
+    df = pd.read_sql("select * from closingprice",cnx)
 
-
-subset1 = df.loc[:, ['BTC', 'ETH','EOS','LTC']]
-
-print(subset1.corr())
+    df.set_index('Date',inplace=True)
 
 
-# Calculation of daily percentage
+    subset1 = df.loc[:, ['BTC', 'ETH','EOS','LTC']]
 
-ret = subset1.pct_change()*100
+    print(subset1.corr())
 
-#Plotting the histogram by specifying the number of bins
 
-ret.hist(bins=50)
+    # Calculation of daily percentage
 
-# Box plot
+    ret = subset1.pct_change()*100
 
-ret.plot(kind="box",figsize=(16,5))
+    #Plotting the histogram by specifying the number of bins
+
+    ret.hist(bins=50)
+
+    # Box plot
+
+    ret.plot(kind="box",figsize=(16,5))
+
+
+if __name__=='__main__':
+    analyzeclosingprice()

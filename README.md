@@ -13,10 +13,18 @@
    <ul>
      <li>Clone the repository from GitHub: git clone https://github.com/gianniprocida/pricingDataBinance/tree/new_branch</li>
      <li>Navigate to the pricingDataBinance: cd pricingDataBinance</li>
-     <li>Run the python script to create the database with pricing data of BTC,ETH, EOS, LTC: python3.8 Load2mysql.py
- </li>
+     <li>Install any dependencies required by the project:
+      <ul>
+          <li>numpy</li>
+          <li>pandas</li>
+          <li>mysql-connector-python</li>
+          <li>sqlalchemy</li> 
+      </ul>
+     </li>
+     <li>Run the python script to create the database with pricing data of BTC,ETH, EOS, LTC: python3.8 Load2mysql.py</li>
      <li>Run the script 'createClosingPrice.sql' to create a new table named "closingprice" in the database, and establish relationships between the "closingprice" table
          and all existing tables in the database as necessary.</li>
+    <li>Run the script analysis.py to analyze the closingprice table.</li>
    </ul>     
 
 </body>
